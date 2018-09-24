@@ -208,6 +208,7 @@
   <update id="updateByGuidSelective" parameterType="com.mybatisgenerator.model.User">
     update user
     <set> 
+    <trim suffixOverrides="," >
      <if test="username != null">
       username = #{username,jdbcType=VARCHAR},
      </if>
@@ -245,8 +246,9 @@
       isdeleted = #{isdeleted,jdbcType=INTEGER},
      </if>
      <if test="createtime != null">
-      createtime = #{createtime,jdbcType=DATE}
+      createtime = #{createtime,jdbcType=DATE},
      </if>
+    </trim>
     </set>
      where guid = #{guid,jdbcType=VARCHAR}
   </update>

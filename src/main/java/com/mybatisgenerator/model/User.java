@@ -1,5 +1,5 @@
 /**
- * @Date:Tue Sep 25 01:13:15 CST 2018
+ * @Date:Tue Sep 25 01:36:09 CST 2018
  * @Description:由generator自动生成
  */
 package com.mybatisgenerator.model;
@@ -10,7 +10,7 @@ import lombok.Data;
 
 /**
  @Table:用户
- @Date:Tue Sep 25 01:13:15 CST 2018
+ @Date:Tue Sep 25 01:36:09 CST 2018
  */
 @Data
 public class User extends BaseModel {

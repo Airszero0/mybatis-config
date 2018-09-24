@@ -80,14 +80,11 @@ public class SqlEditTemplate {
         updateSelecive.addElement(new TextElement("update " + introspectedTable.getFullyQualifiedTableNameAtRuntime()));
 
         boolean _first = true;
-        int totalCount = introspectedTable.getBaseColumns().size();
-        int _index = 1;
-        String _suffix = ",";
         for(IntrospectedColumn introspectedColumn : introspectedTable.getBaseColumns())
         {
-            if(_index==totalCount) _suffix="";
             if(_first) {
                 updateSelecive.addElement(new TextElement("<set> "));
+                updateSelecive.addElement(new TextElement(getTrimPre("","","\",\"")));
                 _first = false;
             }
 
@@ -96,10 +93,10 @@ public class SqlEditTemplate {
             String _mysqlType = MyBatis3FormattingUtilities.getParameterClause(introspectedColumn);
 
             updateSelecive.addElement(new TextElement(" <if test=\""+ _columnName +" != null\">"));
-            updateSelecive.addElement(new TextElement("  " + _mySqlcolunName + " = " + _mysqlType + _suffix));
+            updateSelecive.addElement(new TextElement("  " + _mySqlcolunName + " = " + _mysqlType + ","));
             updateSelecive.addElement(new TextElement(" </if>"));
-            _index++;
         }
+        updateSelecive.addElement(new TextElement("</trim>"));
         updateSelecive.addElement(new TextElement("</set>"));
         updateSelecive.addElement(new TextElement(" where guid = #{guid,jdbcType=VARCHAR}"));
         return updateSelecive;
@@ -113,15 +110,17 @@ public class SqlEditTemplate {
         update.addAttribute(new Attribute("parameterType", introspectedTable.getBaseRecordType()));
         update.addElement(new TextElement("update " + introspectedTable.getFullyQualifiedTableNameAtRuntime()));
         update.addElement(new TextElement("set"));
+
         int totalCount = introspectedTable.getBaseColumns().size();
         int _index = 1;
         String _suffix = ",";
+
         for(IntrospectedColumn introspectedColumn : introspectedTable.getBaseColumns())
         {
             if(_index==totalCount) _suffix="";
-            String _mySqlcolunName = MyBatis3FormattingUtilities.getAliasedEscapedColumnName(introspectedColumn);
+            String _mySqlcolumnName = MyBatis3FormattingUtilities.getAliasedEscapedColumnName(introspectedColumn);
             String _mysqlType = MyBatis3FormattingUtilities.getParameterClause(introspectedColumn);
-            update.addElement(new TextElement(" " + _mySqlcolunName + " = " + _mysqlType +_suffix));
+            update.addElement(new TextElement(" " + _mySqlcolumnName + " = " + _mysqlType  +_suffix));
             _index++;
         }
         update.addElement(new TextElement(" where guid = #{guid,jdbcType=VARCHAR}"));
@@ -132,6 +131,20 @@ public class SqlEditTemplate {
     public static String getInClude(String content)
     {
         return "<include refid=\"" + content + "\" />";
+    }
+
+    public static String getTrimPre(String px,String sx,String ov)
+    {
+        String result = "<trim";
+        if(!px.isEmpty())
+            result+=" prefix=" + px + " ";
+        if(!sx.isEmpty())
+            result+=" suffix=" + sx + " ";
+        if(!ov.isEmpty())
+            result+=" suffixOverrides=" + ov + " ";
+
+        result += ">";
+        return result;
     }
 
 }
