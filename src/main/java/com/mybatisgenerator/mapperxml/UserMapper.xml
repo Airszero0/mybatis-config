@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatisgenerator.mapper.UserMapper">
   <resultMap id="BaseResultMap" type="com.mybatisgenerator.model.User">
     <id column="id" jdbcType="INTEGER" property="id" />
@@ -22,16 +21,6 @@
     id, username, password, guid, salt, phonenumber, email, lastip, groupid, blogid, 
     roleid, isenabled, isdeleted, createtime
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from user
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from user
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
   <insert id="insert" parameterType="com.mybatisgenerator.model.User">
     insert into user (id, username, password, 
       guid, salt, phonenumber, 
@@ -135,74 +124,14 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mybatisgenerator.model.User">
-    update user
-    <set>
-      <if test="username != null">
-        username = #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="guid != null">
-        guid = #{guid,jdbcType=VARCHAR},
-      </if>
-      <if test="salt != null">
-        salt = #{salt,jdbcType=VARCHAR},
-      </if>
-      <if test="phonenumber != null">
-        phonenumber = #{phonenumber,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null">
-        email = #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="lastip != null">
-        lastip = #{lastip,jdbcType=VARCHAR},
-      </if>
-      <if test="groupid != null">
-        groupid = #{groupid,jdbcType=INTEGER},
-      </if>
-      <if test="blogid != null">
-        blogid = #{blogid,jdbcType=INTEGER},
-      </if>
-      <if test="roleid != null">
-        roleid = #{roleid,jdbcType=INTEGER},
-      </if>
-      <if test="isenabled != null">
-        isenabled = #{isenabled,jdbcType=INTEGER},
-      </if>
-      <if test="isdeleted != null">
-        isdeleted = #{isdeleted,jdbcType=INTEGER},
-      </if>
-      <if test="createtime != null">
-        createtime = #{createtime,jdbcType=DATE},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.mybatisgenerator.model.User">
-    update user
-    set username = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      guid = #{guid,jdbcType=VARCHAR},
-      salt = #{salt,jdbcType=VARCHAR},
-      phonenumber = #{phonenumber,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      lastip = #{lastip,jdbcType=VARCHAR},
-      groupid = #{groupid,jdbcType=INTEGER},
-      blogid = #{blogid,jdbcType=INTEGER},
-      roleid = #{roleid,jdbcType=INTEGER},
-      isenabled = #{isenabled,jdbcType=INTEGER},
-      isdeleted = #{isdeleted,jdbcType=INTEGER},
-      createtime = #{createtime,jdbcType=DATE}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <select id="selectAll" parameterType="com.mybatisgenerator.model.User" resultMap="BaseResultMap">
-    select * from user
+  <select id="selectByStringCondition" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select <include refid="Blob_Column_List" />
+    from user
+    where 1=1 #{condition,jdbcType=VARCHAR}
   </select>
-  <select id="selectByCondiction" parameterType="com.mybatisgenerator.model.User" resultMap="BaseResultMap">
-    select * from 
-    user
+  <select id="selectByCondition" parameterType="com.mybatisgenerator.model.User" resultMap="BaseResultMap">
+    select <include refid="Blob_Column_List" />
+    from user
      <where> 
       <if test="true">
         1=1 
@@ -248,4 +177,77 @@
       </if>
      </where>
   </select>
+  <delete id="deleteByGuid" parameterType="java.lang.Integer">
+    delete from user
+     where guid = #{guid,jdbcType=VARCHAR}
+  </delete>
+  <select id="selectByGuid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+     from user
+     where guid = #{guid,jdbcType=VARCHAR}
+  </select>
+  <update id="updateByGuid" parameterType="com.mybatisgenerator.model.User">
+    update user
+    set
+     username = #{username,jdbcType=VARCHAR},
+     password = #{password,jdbcType=VARCHAR},
+     guid = #{guid,jdbcType=VARCHAR},
+     salt = #{salt,jdbcType=VARCHAR},
+     phonenumber = #{phonenumber,jdbcType=VARCHAR},
+     email = #{email,jdbcType=VARCHAR},
+     lastip = #{lastip,jdbcType=VARCHAR},
+     groupid = #{groupid,jdbcType=INTEGER},
+     blogid = #{blogid,jdbcType=INTEGER},
+     roleid = #{roleid,jdbcType=INTEGER},
+     isenabled = #{isenabled,jdbcType=INTEGER},
+     isdeleted = #{isdeleted,jdbcType=INTEGER},
+     createtime = #{createtime,jdbcType=DATE}
+     where guid = #{guid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByGuidSelective" parameterType="com.mybatisgenerator.model.User">
+    update user
+    <set> 
+     <if test="username != null">
+      username = #{username,jdbcType=VARCHAR},
+     </if>
+     <if test="password != null">
+      password = #{password,jdbcType=VARCHAR},
+     </if>
+     <if test="guid != null">
+      guid = #{guid,jdbcType=VARCHAR},
+     </if>
+     <if test="salt != null">
+      salt = #{salt,jdbcType=VARCHAR},
+     </if>
+     <if test="phonenumber != null">
+      phonenumber = #{phonenumber,jdbcType=VARCHAR},
+     </if>
+     <if test="email != null">
+      email = #{email,jdbcType=VARCHAR},
+     </if>
+     <if test="lastip != null">
+      lastip = #{lastip,jdbcType=VARCHAR},
+     </if>
+     <if test="groupid != null">
+      groupid = #{groupid,jdbcType=INTEGER},
+     </if>
+     <if test="blogid != null">
+      blogid = #{blogid,jdbcType=INTEGER},
+     </if>
+     <if test="roleid != null">
+      roleid = #{roleid,jdbcType=INTEGER},
+     </if>
+     <if test="isenabled != null">
+      isenabled = #{isenabled,jdbcType=INTEGER},
+     </if>
+     <if test="isdeleted != null">
+      isdeleted = #{isdeleted,jdbcType=INTEGER},
+     </if>
+     <if test="createtime != null">
+      createtime = #{createtime,jdbcType=DATE}
+     </if>
+    </set>
+     where guid = #{guid,jdbcType=VARCHAR}
+  </update>
 </mapper>

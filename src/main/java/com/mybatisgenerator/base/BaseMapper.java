@@ -2,21 +2,21 @@ package com.mybatisgenerator.base;
 
 import java.util.List;
 
-public interface BaseMapper<T extends BaseModel> {
+public interface BaseMapper<T extends BaseModel,K extends String> {
 
-    List<T> selectAll();
+    List<T> selectByStringCondition(String condition);
 
-    List<T> selectByCondiction(T record);
+    List<T> selectByCondition(T record);
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByGuid(K guid);
 
     int insert(T record);
 
     int insertSelective(T record);
 
-    T selectByPrimaryKey(Integer id);
+    T selectByGuid(K guid);
 
-    int updateByPrimaryKeySelective(T record);
+    int updateByGuidSelective(T record);
 
-    int updateByPrimaryKey(T record);
+    int updateByGuid(T record);
 }
