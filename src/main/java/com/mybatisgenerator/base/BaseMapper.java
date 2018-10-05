@@ -12,8 +12,6 @@ public interface BaseMapper<T extends BaseModel,K extends String> {
 
     int insert(T record);
 
-    int insertSelective(T record);
-
     T selectByGuid(K guid);
 
     int updateByGuidSelective(T record);

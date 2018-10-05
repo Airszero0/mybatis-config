@@ -18,6 +18,8 @@ public class MapperPlugin extends PluginAdapter {
     @Override
     public boolean sqlMapDocumentGenerated(Document document, IntrospectedTable introspectedTable) {
         XmlElement parentElement = document.getRootElement();
+        parentElement.addElement(SqlEditTemplate.g_Insert(introspectedTable));
+        parentElement.addElement(SqlEditTemplate.g_AllColunmsList(introspectedTable));
         parentElement.addElement(SqlEditTemplate.g_SelectAll(introspectedTable));
         parentElement.addElement(SqlEditTemplate.g_SelectByCondiction(introspectedTable));
         parentElement.addElement(SqlEditTemplate.g_deleteByGuid(introspectedTable));
@@ -42,6 +44,7 @@ public class MapperPlugin extends PluginAdapter {
 
     @Override
     public boolean modelFieldGenerated(Field field, TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn, IntrospectedTable introspectedTable, ModelClassType modelClassType) {
+       //id 和 guid 不在子类中生成
         if(field.getName().equals("id")||field.getName().equals("guid"))
             return false;
         return true;
@@ -76,6 +79,11 @@ public class MapperPlugin extends PluginAdapter {
     }
 
     @Override
+    public boolean sqlMapBaseColumnListElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
+        return super.sqlMapBaseColumnListElementGenerated(element, introspectedTable);
+    }
+
+    @Override
     public boolean sqlMapDeleteByPrimaryKeyElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
         return false;
     }
@@ -92,6 +100,21 @@ public class MapperPlugin extends PluginAdapter {
 
     @Override
     public boolean sqlMapUpdateByPrimaryKeyWithoutBLOBsElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
+    public boolean sqlMapSelectAllElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
+    public boolean sqlMapInsertElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
+    public boolean sqlMapInsertSelectiveElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
         return false;
     }
 }

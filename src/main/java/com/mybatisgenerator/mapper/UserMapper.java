@@ -1,5 +1,5 @@
 /**
- * @Date:Tue Sep 25 01:36:09 CST 2018
+ * @Date:Fri Oct 05 22:15:27 CST 2018
  * @Description:由generator自动生成
  */
 package com.mybatisgenerator.mapper;
