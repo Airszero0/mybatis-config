@@ -18,7 +18,7 @@
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/blogsys?useSSL=false"
                         userId="root"
-                        password="sqlpass@">
+                        password="@">
             <property name="useInformationSchema" value="true"></property>
         </jdbcConnection>
 
